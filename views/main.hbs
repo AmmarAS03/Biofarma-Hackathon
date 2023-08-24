@@ -1,19 +1,52 @@
 <!-- views/anakList.hbs -->
-<!DOCTYPE html>
+
 <html>
-<head>
-    <title>Anak List</title>
-</head>
-<body>
-    <h1>List of Anak</h1>
-    <ul>
-        {{#each anakList}}
-        <li>
-            <strong>Name:</strong> {{nama}} <br>
-            <strong>Birth Date:</strong> {{tanggal_lahir}} <br>
-            <strong>Entry Year:</strong> {{tahun_masuk}}
-        </li>
-        {{/each}}
-    </ul>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beranda | Fine Later</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/main.css" />
+    <link rel="stylesheet" href="/style/nav.css" />
+  </head>
+
+  <body>
+    <nav>
+      <div class="logo-nav">
+        <a href="/">
+          <img src="/assets/logo.png" alt="logo" />
+        </a>
+      </div>
+      <div class="nav-item">
+        SMA 3 Makassar
+      </div>
+    </nav>
+    <div class="home-page">
+      <h1>
+        Daftar Siswa
+      </h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Nama</th>
+            <th>Tanggal Lahir</th>
+            <th>Tahun Masuk</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each anakList}}
+            <tr>
+              <td>
+                <a class="nama-link" href="/">
+                  {{nama}}
+                </a>
+              </td>
+              <td>{{tanggal_lahir}}</td>
+              <td>{{tahun_masuk}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </body>
 </html>
