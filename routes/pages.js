@@ -30,5 +30,32 @@ router.get('/', (req, res) => {
  
 })
 
+// routes/pages.js
+
+router.get('/anak/:id', (req, res) => {
+    const anakId = req.params.id;
+
+    // Fetch the child's details and associated rapot data from the database
+    const queryAnak = 'SELECT * FROM anak WHERE nisn = ?';
+    const queryRapot = 'SELECT * FROM rapot WHERE anak_id = ?';
+
+    db.query(queryAnak, [anakId], (error, anakData) => {
+        if (error || anakData.length === 0) {
+            console.log(error);
+            res.render('error', { message: 'Child not found.' });
+        } else {
+            db.query(queryRapot, [anakId], (rapotError, rapotData) => {
+                if (rapotError) {
+                    console.log(rapotError);
+                    res.render('error', { message: 'Error retrieving rapot data.' });
+                } else {
+                    res.render('anakDetails', { anak: anakData[0], rapotList: rapotData });
+                }
+            });
+        }
+    });
+});
+
+
 
 module.exports = router;
