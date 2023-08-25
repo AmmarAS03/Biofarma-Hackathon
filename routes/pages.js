@@ -46,73 +46,130 @@ router.get("/", (req, res) => {
 });
 
 // routes/pages.js
-
 router.get('/anak/:id', (req, res) => {
     const anakId = req.params.id;
 
-    // Fetch the child's details and associated rapot data from the database
+    // Fetch the child's details and associated clinical trial data from the database
     const queryAnak = 'SELECT * FROM anak WHERE nisn = ?';
-    const queryRapot = 'SELECT * FROM rapot WHERE anak_id = ?';
+    const queryClinicalTrials = `
+    SELECT ct.*, m.kode AS medicine_kode, m.nama AS medicine_name
+    FROM clinical_trials AS ct
+    LEFT JOIN medicine AS m ON ct.medicine_kode = m.kode
+    WHERE ct.nisn = ?
+`;
+
 
     db.query(queryAnak, [anakId], (error, anakData) => {
         if (error || anakData.length === 0) {
             console.log(error);
-            res.render('error', { message: 'Child not found.' });
+            //res.render('error', { message: 'Child not found.' });
         } else {
-            db.query(queryRapot, [anakId], (rapotError, rapotData) => {
-                if (rapotError) {
-                    console.log(rapotError);
-                    res.render('error', { message: 'Error retrieving rapot data.' });
+            db.query(queryClinicalTrials, [anakId], (clinicalTrialsError, clinicalTrialsData) => {
+                if (clinicalTrialsError) {
+                    console.log(clinicalTrialsError);
+                    //res.render('error', { message: 'Error retrieving clinical trial data.' });
                 } else {
-                    res.render('anakDetails', { anak: anakData[0], rapotList: rapotData });
+                    res.render('anakDetails', {
+                        anak: anakData[0],
+                        clinicalTrialsList: clinicalTrialsData.map(clinicalTrial => {
+                            return {
+                                ...clinicalTrial,
+                                medicine_name: clinicalTrial.medicine_name,
+                                medicine_kode: clinicalTrial.medicine_kode
+                            };
+                        })
+                    });
                 }
             });
         }
     });
 });
 
+
+router.get('/tambahReaksi/:rapot_id', (req, res) => {
+    const rapotId = req.params.rapot_id;
+
+    // Render the page for adding reaksi tambahan, passing rapotId to the view
+    res.render('tambahReaksi', { rapotId });
+});
+
+
 router.get('/imunisasiObatC', (req, res) => {
     res.render('imunisasiObatC');
 });
 
-// routes/pages.js
-router.post('/submitImunisasi', (req, res) => {
-    const { nisn, tanggal_tindakan, kode_obat, reaksi_24_jam, reaksi_72_jam, reaksi_1_minggu, efek_samping } = req.body;
+router.get('/addClinicalTrial/:nisn', (req, res) => {
+    const nisn = req.params.nisn;
 
-    const nama_kegiatan = 'Imunisasi Obat C';
+    // Render the page for adding clinical trial data, passing nisn to the view
+    res.render('addClinicalTrial', { nisn });
+});
 
-    // Check if the provided nisn exists in the anak table
-    const checkNisnQuery = 'SELECT COUNT(*) AS count FROM anak WHERE nisn = ?';
 
-    db.query(checkNisnQuery, [nisn], (checkError, checkResult) => {
-        if (checkError) {
-            console.log(checkError);
-            // Handle the error, e.g., show an error page
-            res.render('imunisasiObatC', { message: 'Error checking nisn.' });
-        } else {
-            const count = checkResult[0].count;
-            if (count === 0) {
-                // nisn not found, handle accordingly (e.g., show a message)
-                res.render('imunisasiObatC', { message: 'NISN yang anda masukan salah' });
+router.post('/updateClinicalTrial/:id', (req, res) => {
+    const clinicalTrialId = req.params.id;
+    const {
+        heart_rate_24,
+        blood_pressure_24,
+        respirate_24,
+        temperature_24,
+        pain_score_24,
+        pain_location_24,
+        pain_quality_24,
+        pain_quantity_24,
+        pain_frequency_24,
+        pain_situation_24,
+        pain_factors_24,
+        other_symptoms_24,
+    } = req.body;
+
+    // Update the clinical trial data in the database
+    const updateQuery = `
+        UPDATE clinical_trials
+        SET
+            heart_rate_24 = ?,
+            blood_pressure_24 = ?,
+            respirate_24 = ?,
+            temperature_24 = ?,
+            pain_score_24 = ?,
+            pain_location_24 = ?,
+            pain_quality_24 = ?,
+            pain_quantity_24 = ?,
+            pain_frequency_24 = ?,
+            pain_situation_24 = ?,
+            pain_factors_24 = ?,
+            other_symptoms_24 = ?
+        WHERE id = ?
+    `;
+
+    db.query(
+        updateQuery,
+        [
+            heart_rate_24,
+            blood_pressure_24,
+            respirate_24,
+            temperature_24,
+            pain_score_24,
+            pain_location_24,
+            pain_quality_24,
+            pain_quantity_24,
+            pain_frequency_24,
+            pain_situation_24,
+            pain_factors_24,
+            other_symptoms_24,
+            clinicalTrialId
+        ],
+        (error, result) => {
+            if (error) {
+                console.log(error);
+                res.status(500).send('Error submitting clinical trial data.');
             } else {
-                // Construct the INSERT query
-                const insertQuery = 'INSERT INTO rapot (anak_id, tanggal_tindakan, nama_kegiatan, kode_obat, reaksi_24_jam, reaksi_72_jam, reaksi_1_minggu, efek_samping) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-                
-                // Execute the INSERT query
-                db.query(insertQuery, [nisn, tanggal_tindakan, nama_kegiatan, kode_obat, reaksi_24_jam, reaksi_72_jam, reaksi_1_minggu, efek_samping], (error, result) => {
-                    if (error) {
-                        console.log(error);
-                        // Handle the error, e.g., show an error page
-                        res.render('imunisasiObatC', { message: 'Error submitting data.' });
-                    } else {
-                        // Successful insertion
-                        res.render('imunisasiObatC', { message: `${nisn} berhasil dimasukan` }); // Redirect back to the form page
-                    }
-                });
+                res.status(200).send('Clinical trial data submitted successfully.');
             }
         }
-    });
+    );
 });
+
 
 
 
