@@ -82,9 +82,10 @@ router.get('/anak/:id', (req, res) => {
                 }
             });
         }
-    });
+      });
+    }
+  });
 });
-
 
 router.get('/tambahReaksi/:rapot_id', (req, res) => {
     const rapotId = req.params.rapot_id;
@@ -169,9 +170,5 @@ router.post('/updateClinicalTrial/:id', (req, res) => {
         }
     );
 });
-
-
-
-
 
 module.exports = router;

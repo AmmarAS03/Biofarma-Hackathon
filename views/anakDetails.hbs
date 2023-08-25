@@ -1,76 +1,97 @@
-<!DOCTYPE html>
+<!-- views/anakDetails.hbs -->
+
 <html>
-<head>
-    <title>Anak Details</title>
-</head>
-<body>
-    <h1>Details</h1>
-    <p><strong>Name:</strong> {{anak.nama}}</p>
-    <p><strong>Nisn:</strong> {{anak.nisn}}</p>
-    <p><strong>Birth Date:</strong> {{anak.tanggal_lahir}}</p>
-    <p><strong>Entry Year:</strong> {{anak.tahun_masuk}}</p>
-    <p><strong>Jenis Kelamin:</strong> {{anak.jenis_kelamin}}</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapor {{anak.nama}} | Fine Later</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/details.css" />
+    <link rel="stylesheet" href="/style/nav.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo-nav">
+        <a href="/">
+          <img src="/assets/logo.png" alt="logo" />
+        </a>
+      </div>
+      <div class="nav-item">
+        SMA 3 Makassar
+      </div>
+    </nav>
+    <div class="page">
+      <h1>
+        {{anak.nama}}
+      </h1>
 
-<h2>Clinical Trials for Polio</h2>
-<ul>
-    {{#each clinicalTrialsList}}
-    <li>
-        <p><strong>Tanggal Tindakan:</strong> {{timestamp}}</p>
-        <p><strong>Medicine Kode:</strong> {{medicine_kode}}</p>
-        <p><strong>Medicine Name:</strong> {{medicine_name}}</p>
-        <p><strong>Heart Rate (24 Hours):</strong> {{heart_rate_24}}</p>
-        <p><strong>Blood Pressure (24 Hours):</strong> {{blood_pressure_24}}</p>
-        <p><strong>Respirate (24 Hours):</strong> {{respirate_24}}</p>
-        <p><strong>Temperature (24 Hours):</strong> {{temperature_24}}</p>
-        <p><strong>Pain Score (24 Hours):</strong> {{pain_score_24}}</p>
-        <p><strong>Pain Location (24 Hours):</strong> {{pain_location_24}}</p>
-        <p><strong>Pain Quality (24 Hours):</strong> {{pain_quality_24}}</p>
-        <p><strong>Pain Quantity (24 Hours):</strong> {{pain_quantity_24}}</p>
-        <p><strong>Pain Frequency (24 Hours):</strong> {{pain_frequency_24}}</p>
-        <p><strong>Pain Situation (24 Hours):</strong> {{pain_situation_24}}</p>
-        <p><strong>Pain Factors (24 Hours):</strong> {{pain_factors_24}}</p>
-        <p><strong>Other Symptoms (24 Hours):</strong> {{other_symptoms_24}}</p>
-        
+      <table class="details-student">
+        <tbody>
+          <tr>
+            <th>
+              NISN
+            </th>
+            <td>{{anak.nisn}}</td>
+          </tr>
 
-        <p><strong>Heart Rate (72 Hours):</strong> {{heart_rate_72}}</p>
-        <p><strong>Blood Pressure (72 Hours):</strong> {{blood_pressure_72}}</p>
-        <p><strong>Respirate (72 Hours):</strong> {{respirate_72}}</p>
-        <p><strong>Temperature (72 Hours):</strong> {{temperature_72}}</p>
-        <p><strong>Pain Score (72 Hours):</strong> {{pain_score_72}}</p>
-        <p><strong>Pain Location (72 Hours):</strong> {{pain_location_72}}</p>
-        <p><strong>Pain Quality (72 Hours):</strong> {{pain_quality_72}}</p>
-        <p><strong>Pain Quantity (72 Hours):</strong> {{pain_quantity_72}}</p>
-        <p><strong>Pain Frequency (72 Hours):</strong> {{pain_frequency_72}}</p>
-        <p><strong>Pain Situation (72 Hours):</strong> {{pain_situation_72}}</p>
-        <p><strong>Pain Factors (72 Hours):</strong> {{pain_factors_72}}</p>
-        <p><strong>Other Symptoms (72 Hours):</strong> {{other_symptoms_72}}</p>
+          <tr>
+            <th>
+              Jenis Kelamin
+            </th>
+            <td>{{anak.jenis_kelamin}}</td>
+          </tr>
 
-        <p><strong>Heart Rate (1 Week):</strong> {{heart_rate_1_week}}</p>
-        <p><strong>Blood Pressure (1 Week):</strong> {{blood_pressure_1_week}}</p>
-        <p><strong>Respirate (1 Week):</strong> {{respirate_1_week}}</p>
-        <p><strong>Temperature (1 Week):</strong> {{temperature_1_week}}</p>
-        <p><strong>Pain Score (1 Week):</strong> {{pain_score_1_week}}</p>
-        <p><strong>Pain Location (1 Week):</strong> {{pain_location_1_week}}</p>
-        <p><strong>Pain Quality (1 Week):</strong> {{pain_quality_1_week}}</p>
-        <p><strong>Pain Quantity (1 Week):</strong> {{pain_quantity_1_week}}</p>
-        <p><strong>Pain Frequency (1 Week):</strong> {{pain_frequency_1_week}}</p>
-        <p><strong>Pain Situation (1 Week):</strong> {{pain_situation_1_week}}</p>
-        <p><strong>Pain Factors (1 Week):</strong> {{pain_factors_1_week}}</p>
-        <p><strong>Other Symptoms (1 Week):</strong> {{other_symptoms_1_week}}</p>
+          <tr>
+            <th>
+              Tanggal Lahir
+            </th>
+            <td>{{anak.tanggal_lahir}}</td>
+          </tr>
 
-        {{#if side_effect_date}}
-        <h3>Side Effect (Reaksi Tambahan):</h3>
-        <p><strong>Tanggal Side Effect:</strong> {{side_effect_date}}</p>
-        <p><strong>Side Effect:</strong> {{side_effect}}</p>
-        {{/if}}
+          <tr>
+            <th>
+              Tahun Masuk
+            </th>
+            <td>{{anak.tahun_masuk}}</td>
+          </tr>
+        </tbody>
+      </table>
 
-        
+      <h2>Hasil Tindakan</h2>
 
-        <a href="/tambahReaksi/{{id}}">Tambah Laporan</a>
-    </li>
-    {{/each}}
-    <a href="/addClinicalTrial/{{anak.nisn}}">Add Clinical Trial Data</a>
-</ul>
+      <div class="hasil-tindakan-container">
+        <table class="hasil-tindakan-table">
+          <thead>
+            <tr>
+              <th>Tanggal Tindakan</th>
+              <th>Nama Kegiatan</th>
+              <th>Kode Obat</th>
+              <th>Reaksi 24 Jam</th>
+              <th>Reaksi 72 Jam</th>
+              <th>Reaksi 1 Minggu</th>
+              <th>Efek Samping</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each rapotList}}
+              <tr>
+                <td>
+                  {{tanggal_tindakan}}
+                </td>
+                <td>{{nama_kegiatan}}</td>
+                <td>{{kode_obat}}</td>
+                <td>
+                  {{reaksi_24_jam}}
+                </td>
+                <td>{{reaksi_72_jam}}</td>
+                <td>{{reaksi_1_minggu}}</td>
+                <td>{{efek_samping}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-</body>
+  </body>
 </html>
