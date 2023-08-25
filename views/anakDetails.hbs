@@ -1,30 +1,97 @@
 <!-- views/anakDetails.hbs -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Anak Details</title>
-</head>
-<body>
-    <h1>Details</h1>
-    <p><strong>Name:</strong> {{anak.nama}}</p>
-    <p><strong>Nisn:</strong> {{anak.nisn}}</p>
-    <p><strong>Birth Date:</strong> {{anak.tanggal_lahir}}</p>
-    <p><strong>Entry Year:</strong> {{anak.tahun_masuk}}</p>
-    <p><strong>Jenis Kelamin:</strong> {{anak.jenis_kelamin}}</p>
 
-    <h2>Rapot Data</h2>
-    <ul>
-        {{#each rapotList}}
-        <li>
-            <p><strong>Tanggal Tindakan:</strong> {{tanggal_tindakan}}</p>
-            <p><strong>Nama Kegiatan:</strong> {{nama_kegiatan}}</p>
-            <p><strong>Kode Obat:</strong> {{kode_obat}}</p>
-            <p><strong>Reaksi 24 Jam:</strong> {{reaksi_24_jam}}</p>
-            <p><strong>Reaksi 72 Jam:</strong> {{reaksi_72_jam}}</p>
-            <p><strong>Reaksi 1 Minggu:</strong> {{reaksi_1_minggu}}</p>
-            <p><strong>Efek Samping:</strong> {{efek_samping}}</p>
-        </li>
-        {{/each}}
-    </ul>
-</body>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapor {{anak.nama}} | Fine Later</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/details.css" />
+    <link rel="stylesheet" href="/style/nav.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo-nav">
+        <a href="/">
+          <img src="/assets/logo.png" alt="logo" />
+        </a>
+      </div>
+      <div class="nav-item">
+        SMA 3 Makassar
+      </div>
+    </nav>
+    <div class="page">
+      <h1>
+        {{anak.nama}}
+      </h1>
+
+      <table class="details-student">
+        <tbody>
+          <tr>
+            <th>
+              NISN
+            </th>
+            <td>{{anak.nisn}}</td>
+          </tr>
+
+          <tr>
+            <th>
+              Jenis Kelamin
+            </th>
+            <td>{{anak.jenis_kelamin}}</td>
+          </tr>
+
+          <tr>
+            <th>
+              Tanggal Lahir
+            </th>
+            <td>{{anak.tanggal_lahir}}</td>
+          </tr>
+
+          <tr>
+            <th>
+              Tahun Masuk
+            </th>
+            <td>{{anak.tahun_masuk}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Hasil Tindakan</h2>
+
+      <div class="hasil-tindakan-container">
+        <table class="hasil-tindakan-table">
+          <thead>
+            <tr>
+              <th>Tanggal Tindakan</th>
+              <th>Nama Kegiatan</th>
+              <th>Kode Obat</th>
+              <th>Reaksi 24 Jam</th>
+              <th>Reaksi 72 Jam</th>
+              <th>Reaksi 1 Minggu</th>
+              <th>Efek Samping</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each rapotList}}
+              <tr>
+                <td>
+                  {{tanggal_tindakan}}
+                </td>
+                <td>{{nama_kegiatan}}</td>
+                <td>{{kode_obat}}</td>
+                <td>
+                  {{reaksi_24_jam}}
+                </td>
+                <td>{{reaksi_72_jam}}</td>
+                <td>{{reaksi_1_minggu}}</td>
+                <td>{{efek_samping}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </body>
 </html>

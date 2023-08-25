@@ -47,3 +47,38 @@ h1 {
   line-height: normal;
   text-align: center;
 }
+
+h2 {
+  color: var(--primary-normal);
+  font-size: 24px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-direction: column;
+  max-width: 1240px;
+  margin: auto;
+  padding: 54px 0px;
+  gap: 18px;
+}
+
+@media (max-width: 1240px) {
+  .page {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

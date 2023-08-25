@@ -1,0 +1,65 @@
+.details-student {
+  border-collapse: collapse;
+  width: max-content;
+}
+
+.details-student th {
+  padding: 6px 36px 6px 0px;
+
+  color: var(--neutral-dark-hover);
+  font-size: 16px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  line-height: auto;
+  text-align: start;
+}
+
+.details-student td {
+  padding: 6px 36px 6px 0px;
+
+  color: var(--neutral-dark-hover);
+  font-size: 16px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  line-height: auto;
+}
+
+.hasil-tindakan-container {
+  overflow: auto;
+  width: 100%;
+}
+
+.hasil-tindakan-table {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.hasil-tindakan-table th {
+  border: 1px solid var(--neutral-normal-hover);
+  padding: 8px;
+
+  color: var(--neutral-dark-hover);
+  font-size: 16px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  line-height: auto;
+}
+
+.hasil-tindakan-table td {
+  border: 1px solid var(--neutral-normal-hover);
+  padding: 8px;
+
+  color: var(--neutral-dark-hover);
+  font-size: 16px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  line-height: auto;
+}
