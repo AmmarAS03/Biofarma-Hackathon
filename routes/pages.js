@@ -56,6 +56,33 @@ router.get('/anak/:id', (req, res) => {
     });
 });
 
+router.get('/imunisasiObatC', (req, res) => {
+    res.render('imunisasiObatC');
+});
+
+// routes/pages.js
+
+router.post('/submitImunisasi', (req, res) => {
+    const { nisn, tanggal_tindakan, kode_obat, reaksi_24_jam, reaksi_72_jam, reaksi_1_minggu, efek_samping } = req.body;
+
+    const nama_kegiatan = 'Imunisasi Obat C'
+    // Construct the INSERT query
+    const insertQuery = 'INSERT INTO rapot (anak_id, tanggal_tindakan, nama_kegiatan, kode_obat, reaksi_24_jam, reaksi_72_jam, reaksi_1_minggu, efek_samping) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    
+    // Execute the INSERT query
+    db.query(insertQuery, [ nisn, tanggal_tindakan, nama_kegiatan, kode_obat, reaksi_24_jam, reaksi_72_jam, reaksi_1_minggu, efek_samping], (error, result) => {
+        if (error) {
+            console.log(error);
+            // Handle the error, e.g., show an error page
+            res.render('error', { message: 'Error submitting data.' });
+        } else {
+            // Successful insertion
+            res.redirect('/imunisasiObatC'); // Redirect back to the form page
+        }
+    });
+});
+
+
 
 
 module.exports = router;

@@ -1,0 +1,36 @@
+<!-- views/imunisasiObatC.hbs -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Imunisasi Obat C</title>
+</head>
+<body>
+    <h1>Imunisasi Obat C</h1>
+    <form action="/submitImunisasi" method="POST">
+
+
+        <label for="nisn">NISN:</label>
+        <input type="text" id="nisn" name="nisn" required><br><br>
+
+        <label for="tanggal_tindakan">Tanggal Tindakan:</label>
+        <input type="text" id="tanggal_tindakan" name="tanggal_tindakan" required><br><br>
+
+        <label for="kode_obat">Kode Obat:</label>
+        <input type="text" id="kode_obat" name="kode_obat" required><br><br>
+
+        <label for="reaksi_24_jam">Reaksi 24 Jam:</label>
+        <input type="text" id="reaksi_24_jam" name="reaksi_24_jam"><br><br>
+
+        <label for="reaksi_72_jam">Reaksi 72 Jam:</label>
+        <input type="text" id="reaksi_72_jam" name="reaksi_72_jam"><br><br>
+
+        <label for="reaksi_1_minggu">Reaksi 1 Minggu:</label>
+        <input type="text" id="reaksi_1_minggu" name="reaksi_1_minggu"><br><br>
+
+        <label for="efek_samping">Efek Samping:</label>
+        <input type="text" id="efek_samping" name="efek_samping"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
