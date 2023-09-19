@@ -1,0 +1,97 @@
+<!-- views/anakDetails.hbs -->
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapor {{anak.nama}} | Fine Later</title>
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/details.css" />
+    <link rel="stylesheet" href="/style/nav.css" />
+    <link rel="stylesheet" href="/style/biofarma.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo-nav">
+        <a href="/">
+          <img src="/assets/logo.png" alt="logo" />
+        </a>
+      </div>
+      <div class="nav-item">
+        Biofarma
+      </div>
+    </nav>
+    <div class="page">
+
+      <h2>Hasil Tindakan Penyuntikan Obat A</h2>
+      <div class="options-container">
+        <div class="options-item">
+          <label>Pilih Kota: </label>
+          <select>
+            <option>Makassar</option>
+            <option>Jakarta</option>
+            <option>Bandung</option>
+            <option>Surabaya</option>
+          </select>
+        </div>
+
+        <div class="options-item">
+          <label>Urutkan Berdasarkan: </label>
+          <select>
+            <option>Pilih</option>
+            <option>Detak Jantung</option>
+            <option>Bandung</option>
+            <option>Surabaya</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="hasil-tindakan-container">
+        <table class="hasil-tindakan-table">
+          <thead>
+            <tr>
+              <th>NISN</th>
+              <th>Detak Jantung (24h)</th>
+              <th>Tekanan Darah (24h)</th>
+              <th>Laju Pernafasan (24h)</th>
+              <th>Suhu (24h)</th>
+              <th>Skor Nyeri (24h)</th>
+              <th>Lokasi Nyeri (24h)</th>
+              <th>Kualitas Nyeri (24h)</th>
+              <th>Kuantitas Nyeri (24h)</th>
+              <th>Frekuensi Nyeri (24h)</th>
+              <th>Situasi Nyeri (24h)</th>
+              <th>Faktor Penyebab Nyeri (24h)</th>
+              <th>Gejala Lainnya (24h)</th>
+              <th>Detak Jantung (72h)</th>
+              <th>Tekanan Darah (72h)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each hashedClinicalTrialsData}}
+              <tr>
+                <td>{{hashed_nisn}}</td>
+                <td>{{heart_rate_24}}</td>
+                <td>{{blood_pressure_24}}</td>
+                <td>{{respirate_24}}</td>
+                <td>{{temperature_24}}</td>
+                <td>{{pain_score_24}}</td>
+                <td>{{pain_location_24}}</td>
+                <td>{{pain_quality_24}}</td>
+                <td>{{pain_quantity_24}}</td>
+                <td>{{pain_frequency_24}}</td>
+                <td>{{pain_situation_24}}</td>
+                <td>{{pain_factors_24}}</td>
+                <td>{{other_symptoms_24}}</td>
+                <td>{{heart_rate_72}}</td>
+                <td>{{blood_pressure_72}}</td>
+
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </body>
+</html>

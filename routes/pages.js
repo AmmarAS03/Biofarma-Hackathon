@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
+const bcrypt = require('bcryptjs');
 
 dotenv.config({ path: "./config.env" });
 
@@ -69,8 +70,19 @@ router.get('/anak/:id', (req, res) => {
                     console.log(clinicalTrialsError);
                     //res.render('error', { message: 'Error retrieving clinical trial data.' });
                 } else {
+                    
+                    const formattedAnakData = {
+                        ...anakData[0],
+                        // Format the tanggal_lahir field
+                        tanggal_lahir: new Date(anakData[0].tanggal_lahir).toLocaleDateString("en-US", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric"
+                        })
+                    };
+
                     res.render('anakDetails', {
-                        anak: anakData[0],
+                        anak: formattedAnakData,
                         clinicalTrialsList: clinicalTrialsData.map(clinicalTrial => {
                             return {
                                 ...clinicalTrial,
@@ -84,20 +96,10 @@ router.get('/anak/:id', (req, res) => {
         }
       });
     }
-  });
-});
-
-router.get('/tambahReaksi/:rapot_id', (req, res) => {
-    const rapotId = req.params.rapot_id;
-
-    // Render the page for adding reaksi tambahan, passing rapotId to the view
-    res.render('tambahReaksi', { rapotId });
-});
+);
 
 
-router.get('/imunisasiObatC', (req, res) => {
-    res.render('imunisasiObatC');
-});
+
 
 router.get('/addClinicalTrial/:nisn', (req, res) => {
     const nisn = req.params.nisn;
@@ -170,5 +172,57 @@ router.post('/updateClinicalTrial/:id', (req, res) => {
         }
     );
 });
+
+// ... other imports ...
+
+router.get('/renderJSON', (req, res) => {
+    const query = 'SELECT * FROM clinical_trials';
+    
+    db.query(query, (error, clinicalTrialsData) => {
+        if (error) {
+            console.log(error);
+            res.status(500).send('Error fetching clinical trials data.');
+        } else {
+            const hashedClinicalTrialsData = clinicalTrialsData.map(clinicalTrial => {
+                const { nisn, ...rest } = clinicalTrial; // Destructure nisn and create a new object with the rest of the properties
+                const hashedNisn = bcrypt.hashSync(nisn.toString(), 8); // Convert nisn to string
+                return {
+                    ...rest, // Spread the rest of the properties
+                    hashed_nisn: hashedNisn,
+                };
+            });
+            res.json(hashedClinicalTrialsData);
+        }
+    });
+});
+
+router.get('/biofarma', (req, res) => {
+    const query = 'SELECT * FROM clinical_trials';
+
+    db.query(query, (error, clinicalTrialsData) => {
+        if (error) {
+            console.log(error);
+            res.status(500).send('Error fetching clinical trials data.');
+        } else {
+            const hashedClinicalTrialsData = clinicalTrialsData.map(clinicalTrial => {
+                const { nisn, ...rest } = clinicalTrial; // Destructure nisn and create a new object with the rest of the properties
+                const hashedNisn = bcrypt.hashSync(nisn.toString(), 8).substring(0, 10); // Convert nisn to string
+                return {
+                    ...rest, // Spread the rest of the properties
+                    hashed_nisn: hashedNisn,
+                };
+            });
+            res.render('biofarma', {
+                hashedClinicalTrialsData
+            });
+        }
+    });
+})
+
+// ... rest of your code ...
+
+// ... rest of your code ...
+
+
 
 module.exports = router;

@@ -58,6 +58,26 @@ h2 {
   text-align: center;
 }
 
+h3 {
+  color: var(--primary-normal);
+  font-size: 18px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+}
+
+h4{
+  color:#02393f;
+  font-size: 13px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+}
+
 .page {
   display: flex;
   justify-content: center;
